@@ -1,0 +1,57 @@
+.location-bg {
+  background: #C4C4C4;
+}
+
+.location {
+  background: white;
+  border-radius: 15px;
+  font-size: 1rem;
+  height: 175px;
+}
+
+.copy-right {
+  background: #444444;
+  margin: 0 auto;
+}
+
+.location-text {
+  font-size: 1rem;
+}
+
+@media (max-width: 480px) {
+  .location-text {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .location-text-sub {
+    font-size: 0.6rem;
+  }
+}
+
+.color-taipei {
+  color: #283C43;
+  text-align: center;
+}
+
+.color-taoyuan {
+  color: #3591C5;
+}
+
+.color-taichung {
+  color: #D08181;
+}
+
+.color-tainan {
+  color: #7FC0C5;
+}
+
+.color-kaohsiung {
+  color: #5E9BAE;
+}
+
+.color-other-city {
+  color: #52797C;
+}
+/*# sourceMappingURL=home.css.map */
