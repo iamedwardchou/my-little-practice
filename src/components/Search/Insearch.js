@@ -10,7 +10,8 @@ import SearchBtn from './SearchBtn'
 // }
 
 // 接收來自 Search 傳遞的 axios 資料
-const Insearch = ({searchTerm, setSearchTerm, setRouteName, setDepName, setDesName, setCurrentRender, busData}) => {
+const Insearch = (props) => {
+    const {searchTerm, setSearchTerm, setRouteName, setDepName, setDesName, setCurrentRender, busData} = props;
     const [searchResults, setSearchResult] = useState([]);
     const [isRender, setIsRender] = useState(false)
     
