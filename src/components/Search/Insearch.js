@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import SearchBtn from './SearchBtn'
+import '../../styles/components/insearch.css'
 
 
 // async function getBus(){
@@ -18,6 +19,9 @@ const Insearch = (props) => {
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
         setIsRender(true)
+        if(e.target.value === ""){
+            setIsRender(false)
+        }
     }
     const SearchRoute = (e) => {
         setRouteName(e.target.dataset.name);
@@ -35,7 +39,7 @@ const Insearch = (props) => {
             return a.RouteName.Zh_tw - b.RouteName.Zh_tw;
         })
         setSearchResult(result);
-    },[searchTerm])
+    },[busData, searchTerm])
 
     // history
     return (
@@ -46,7 +50,11 @@ const Insearch = (props) => {
             value={searchTerm}
             onChange={handleSearch}
             />  
-             <ul>
+            {/* 用vh 設定渲染列表的高度，手機版要小一點 
+                還有清除搜尋列表會整個跑出來的問題
+                應該就是用setState設定成空就好了
+            */}
+             <ul className="search-result">
                 {isRender && searchResults.map(item => (
                     <li key={item.RouteUID} onClick={SearchRoute} 
                     data-name={item.RouteName.Zh_tw}

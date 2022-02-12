@@ -1,15 +1,15 @@
-@import "../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/functions";
 // 自定義的變數放在預設變數上面，function 一定放最上面
 @import "./helpers/variables";
 @import "./helpers/reset";
 // reset 應該放在一個base資料夾中?
 
 
-@import "../node_modules/bootstrap/scss/variables";
-@import "../node_modules/bootstrap/scss/mixins";
-@import "../node_modules/bootstrap/scss/utilities";
+@import "../..//node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/utilities";
 
-@import "../node_modules/bootstrap/scss/bootstrap"; // Bootstrap 完整原始碼
+@import "../../node_modules/bootstrap/scss/bootstrap"; // Bootstrap 完整原始碼
 
 // 自定義元件排版內容
 @import "./helpers/customerStyles"

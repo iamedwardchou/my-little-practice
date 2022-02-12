@@ -1,0 +1,14 @@
+.search-result {
+  height: 40vh;
+}
+
+.search-result li {
+  margin-top: 5px;
+  padding-top: 5px;
+  border-bottom: 1px solid #888888;
+}
+
+.search-result li p {
+  color: #888888;
+}
+/*# sourceMappingURL=insearch.css.map */

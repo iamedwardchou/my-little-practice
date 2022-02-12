@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,cAAc,CAAA;EACV,MAAM,EAAE,IAAI;CASf;;AAVD,AAEI,cAFU,CAEV,EAAE,CAAA;EACE,UAAU,EAAE,GAAG;EACf,WAAW,EAAE,GAAG;EAChB,aAAa,EAAE,iBAAiB;CAInC;;AATL,AAMQ,cANM,CAEV,EAAE,CAIE,CAAC,CAAA;EACG,KAAK,EAAC,OAAO;CAChB",
+    "sources": [
+        "insearch.scss"
+    ],
+    "names": [],
+    "file": "insearch.css"
+}

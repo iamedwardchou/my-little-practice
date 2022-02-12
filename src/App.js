@@ -4,7 +4,7 @@ import Nav from './components/Nav.js'
 import Home from './pages/Home.js'
 import Search from './pages/Search.js'
 import Copyright from './components/Copyright.js'
-import "./styles/base/base.css";
+// import "./styles/base/base.css";
 
 
 function App() {

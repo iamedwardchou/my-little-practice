@@ -1,18 +1,33 @@
-import React from "react";
+import React , {useRef} from "react";
 import { keyboard_base } from "../../utilities/keyboard_config";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "../../styles/components/serachBtn.css";
 
-const SearchBtn = (props, { searchTerm, setSearchTerm, setIsRender }) => {
+const SearchBtn = ({ searchTerm, setSearchTerm, setIsRender }) => {
+  // const btnRef = useRef(null)
+
   const handleClick = (e) => {
-    setSearchTerm(e.target.value);
+    // console.log(btnRef.current.value)
+    let btn = e.target.value;
+
+    if(btn !== "清除" && isNaN(btn) && isNaN(searchTerm) ){
+      return
+    }
+    // 只差數字後面不能接中文的功能
+    // if(!isNaN(btn)){
+    //   if(isNaN(searchTerm)){
+    //     return
+    //   }
+    // }
+    setSearchTerm(searchTerm + btn);
     setIsRender(true);
+
+    if(btn === "清除"){
+      setSearchTerm("");
+      setIsRender(false);
+    }
   };
-  const clearSearchTerm = () => {
-    setSearchTerm("");
-    setIsRender(false);
-  };
-  let btnKey = keyboard_base.Object.Key;
+  let btnKey = Object.keys(keyboard_base);
 
   return (
     // <></>
@@ -54,8 +69,8 @@ const SearchBtn = (props, { searchTerm, setSearchTerm, setIsRender }) => {
       <Row>
         {btnKey.map((item) => (
           <Col xs={2}>
-            {keyboard_base[item].forEach((btn) => (
-              <Button key={btn} type="button" className="">
+            {keyboard_base[item].map((btn) => (
+              <Button key={btn} value={btn} onClick={handleClick} type="button" className="">
                 {btn}
               </Button>
             ))}

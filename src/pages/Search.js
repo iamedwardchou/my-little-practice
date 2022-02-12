@@ -44,7 +44,7 @@ const Search = ({city}) => {
                 首頁 / 
             </span>
             <div className="row">
-                <div className="col-4">
+                <div className="col-md-4">
                     {currentRender === "Insearch" && (
                         <Insearch 
                         searchTerm={searchTerm} 
@@ -66,7 +66,7 @@ const Search = ({city}) => {
                         />
                     }
                 </div>
-                <div className="col-8">
+                <div className="col-md-8 ">
                     <Map/>
                 </div>
             </div>
