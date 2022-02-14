@@ -15,6 +15,7 @@ const Insearch = (props) => {
     const {searchTerm, setSearchTerm, setRouteName, setDepName, setDesName, setCurrentRender, busData} = props;
     const [searchResults, setSearchResult] = useState([]);
     const [isRender, setIsRender] = useState(false)
+    // 看來是時候用 useContext 來傳遞狀態, 才能在這個檔案設定 localStorage
     
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
