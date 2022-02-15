@@ -1,4 +1,4 @@
-import React ,{useContext} from 'react'
+import React ,{useState, useContext} from 'react'
 import {Link} from 'react-router-dom'
 import busTaipei from '../../images/bus_icon_taipei.svg'
 import busTaoyuan from '../../images/bus_icon_taoyuan.svg'
@@ -6,10 +6,10 @@ import busTaichung from '../../images/bus_icon_taichung.svg'
 import busTainan from '../../images/bus_icon_tainan.svg'
 import busKaohsiung from '../../images/bus_icon_kaohsiung.svg'
 import busOtherCity from '../../images/bus_icon_other_city.svg'
-import {CityContext} from './Search/CityContext'
+import {CityContext} from '../Search/CityContext'
 
 
-const Locations = ({city, setCity}) => {
+const Locations = () => {
     // let cityList =["台北市 / 新北市", "桃園市", "台中市", "台南市", "高雄市", "其他地區"];
     // let citiesListEng =["Taipei / New Taipei", "Taoyuan", "Taichung", "Tainan", "Kaohsiung", "Other City"];
     /*
@@ -27,8 +27,9 @@ const Locations = ({city, setCity}) => {
    */
 
     //從app.js 取得 fetch 的city 資料 
-    //結果之前好像根本沒有用到R
-    const cityContext = useContext(CityContext)
+    
+    const {setCity} = useContext(CityContext)
+    // *** 問題在於要如何在useContext 下 setCity
 
     function handleClick(e){
         e.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav.js";
 import Home from "./pages/Home.js";
@@ -14,14 +14,17 @@ function App() {
   return (
     <>
       <Nav />
-      <CityContext.Provider value={{ cityContext: city }}>
+      {/* 之前是將city 傳到location 設定setCity 然後Search 元件才有city可用
+      這下頭大了 */}
+      {/* 原來只要在這裡傳入上面的setCity就好了 */}
+      <CityContext.Provider value={{city, setCity}}>
         <Routes>
           <Route
             path="/"
             exact
             element={<Home/>}
           />
-          <Route path="/search" exact element={<Search city={city} />} />
+          <Route path="/search" exact element={<Search/>} />
         </Routes>
       </CityContext.Provider>
       <Copyright />

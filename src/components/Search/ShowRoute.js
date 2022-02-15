@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { apiBusRoute, apiBusStopRoute } from "../../Api";
 
-const ShowRoute = ({ city, routeName, depName, desName, setCurrentRender }) => {
+const ShowRoute = ({ city, routeData, setCurrentRender }) => {
   // const [busRoute,setBusRoute] = useState([])
   // const [stopRouteData,setStopRouteData] = useState([])
   // const [arrivalTime,setArrivalTime] = useState([])
@@ -18,6 +18,7 @@ const ShowRoute = ({ city, routeName, depName, desName, setCurrentRender }) => {
     const intialBack = JSON.parse(savedBack)
     return intialBack || []
   });
+  const {routeName, depName, desName } = routeData;
 
   const handleRefetch = () => {
     fetchData();
