@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { apiBusRoute, apiBusStopRoute } from "../../Api";
+import styled from "styled-components";
+import '../../styles/components/showRoute.css'
+
+const StyledUl = styled.ul`
+  padding-left: 1rem;
+`
 
 const ShowRoute = ({ city, routeData, setCurrentRender }) => {
   // const [busRoute,setBusRoute] = useState([])
@@ -8,16 +14,8 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
   const [reFetch, setReFetch] = useState(false);
   const [status, setStatus] = useState("back");
 
-  const [goData, setGoData] = useState(() =>{
-    const savedGo = localStorage.getItem("goData")
-    const intialGo = JSON.parse(savedGo)
-    return intialGo || [];
-  });
-  const [backData, setBackData] = useState(()=>{
-    const savedBack = localStorage.getItem("backData")
-    const intialBack = JSON.parse(savedBack)
-    return intialBack || []
-  });
+  const [goData, setGoData] = useState([]);
+  const [backData, setBackData] = useState([]);
   const {routeName, depName, desName } = routeData;
 
   const handleRefetch = () => {
@@ -175,13 +173,13 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
     fetchData();
   }, [fetchData]);
 
-  useEffect(() => {
-    localStorage.setItem("goData", JSON.stringify(goData))
-  }, [goData]);
+  // useEffect(() => {
+  //   localStorage.setItem("goData", JSON.stringify(goData))
+  // }, [goData]);
 
-  useEffect(() => {
-    localStorage.setItem("backData", JSON.stringify(backData))
-  }, [backData]);
+  // useEffect(() => {
+  //   localStorage.setItem("backData", JSON.stringify(backData))
+  // }, [backData]);
   // 先在dependencies 這裡確定要儲存的goData 和 bakcData, 要先JSON.stringfy
   // 再到一開始 useState的地方取得 parse後的 data
 
@@ -215,14 +213,14 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
         setStatus={setStatus}
         fetchData={fetchData}
       />
-      <ul>
+      <StyledUl className="search-result">
         {status === "back" &&
           backData &&
-          backData.map((data) => <li key={data.stopUID}>{data.stopName}</li>)}
+          backData.map((data) => <li className="d-flex display-row" key={data.stopUID}><p>{data.time}</p> {data.stopName}</li>)}
         {status === "go" &&
           goData &&
-          goData.map((data) => <li key={data.stopUID}>{data.stopName}</li>)}
-      </ul>
+          goData.map((data) => <li className="d-flex display-row" key={data.stopUID}><p>{data.time}</p>{data.stopName}</li>)}
+      </StyledUl>
 
       <button
         type="button"

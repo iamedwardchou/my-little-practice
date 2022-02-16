@@ -1,7 +1,16 @@
-import React , {useRef} from "react";
+import React, { useRef } from "react";
 import { keyboard_base } from "../../utilities/keyboard_config";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import styled from "styled-components";
 import "../../styles/components/serachBtn.css";
+
+const StyledBtn = styled(Button)`
+  font-size: 15px;
+  // width: ;
+  // padding-left: 1rem;
+  // padding-right: 1rem;
+  margin-bottom: 5px;
+`;
 
 const SearchBtn = ({ searchTerm, setSearchTerm, setIsRender }) => {
   // const btnRef = useRef(null)
@@ -10,8 +19,8 @@ const SearchBtn = ({ searchTerm, setSearchTerm, setIsRender }) => {
     // console.log(btnRef.current.value)
     let btn = e.target.value;
 
-    if(btn !== "清除" && isNaN(btn) && isNaN(searchTerm) ){
-      return
+    if (btn !== "清除" && isNaN(btn) && isNaN(searchTerm)) {
+      return;
     }
     // 只差數字後面不能接中文的功能
     // if(!isNaN(btn)){
@@ -22,7 +31,7 @@ const SearchBtn = ({ searchTerm, setSearchTerm, setIsRender }) => {
     setSearchTerm(searchTerm + btn);
     setIsRender(true);
 
-    if(btn === "清除"){
+    if (btn === "清除") {
       setSearchTerm("");
       setIsRender(false);
     }
@@ -66,13 +75,19 @@ const SearchBtn = ({ searchTerm, setSearchTerm, setIsRender }) => {
     //     </div>
     // </div>
     <Container>
-      <Row>
+      <Row className="g-5">
         {btnKey.map((item) => (
           <Col xs={2}>
             {keyboard_base[item].map((btn) => (
-              <Button key={btn} value={btn} onClick={handleClick} type="button" className="">
+              <StyledBtn
+                key={btn}
+                value={btn}
+                onClick={handleClick}
+                type="button"
+                className=""
+              >
                 {btn}
-              </Button>
+              </StyledBtn>
             ))}
           </Col>
         ))}

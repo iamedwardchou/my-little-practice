@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, {useState, useEffect} from "react";
 import { Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav.js";
 import Home from "./pages/Home.js";
@@ -8,9 +8,18 @@ import { CityContext } from "./components/Search/CityContext";
 // import "./styles/base/base.css";
 
 function App() {
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState(()=>{
+    const savedCity = localStorage.getItem("city")
+    const initialCity = JSON.parse(savedCity)
+    return initialCity || ""
+  });
   // 目前概念是建立controlcontext 檔案 並用context 控制狀態
   // useReducer 是 useState的替代作法
+
+  useEffect(() =>{
+    localStorage.setItem("city", JSON.stringify(city))
+  }, [city])
+
   return (
     <>
       <Nav />

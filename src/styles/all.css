@@ -3237,6 +3237,7 @@ textarea.form-control-lg {
   color: #212529;
   text-align: center;
   text-decoration: none;
+  white-space: nowrap;
   vertical-align: middle;
   cursor: pointer;
   -webkit-user-select: none;
@@ -12023,9 +12024,5 @@ fieldset:disabled .btn {
   .d-print-none {
     display: none !important;
   }
-}
-
-ol, ul {
-  padding-left: 0px !important;
 }
 /*# sourceMappingURL=all.css.map */

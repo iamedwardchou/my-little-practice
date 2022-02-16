@@ -1,3 +1,7 @@
+ol, ul {
+  padding-left: 0px;
+}
+
 .search-result {
   height: 40vh;
 }
