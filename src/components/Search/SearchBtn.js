@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { keyboard_base } from "../../utilities/keyboard_config";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import styled from "styled-components";
-import "../../styles/components/serachBtn.css";
 
 const StyledBtn = styled(Button)`
   font-size: 15px;

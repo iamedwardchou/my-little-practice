@@ -1,6 +1,4 @@
-ol , ul{
-    padding-left: 0px;
-}
+@import '../helpers/customerStyles';
 
 .search-result{
     height: 40vh;
@@ -17,4 +15,4 @@ ol , ul{
 // p 標籤的padding 很礙眼 而且className 標籤竟然會通吃??
 // 也要來想想scss 的開發實作了
 // 底下的prototype 是在做什麼?
-// 難道說在各個scss 檔案中 import variables 檔案 就可以不用watchsass 產生一對冗餘的東西了嗎
+// 為了能讓我在更理想的環境欣賞動畫, 必須努力阿

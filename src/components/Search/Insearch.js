@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import SearchBtn from "./SearchBtn";
 import styled from "styled-components";
-import "../../styles/components/insearch.css";
 
 const InsearchUl = styled.ul`
   padding-left: 0;
@@ -46,9 +45,6 @@ const Insearch = (props) => {
     setSearchResult(result);
   }, [busData, searchTerm]);
 
-  // 重整失效的原因在於fetchData 在前一個page執行, 所以重新整理會得不到資料
-  // 和localstorage 沒有太多關係
-  // 下午來美化頁面
   return (
     <div className="key-word-search">
       <input
@@ -60,6 +56,10 @@ const Insearch = (props) => {
       {/* 用vh 設定渲染列表的高度，手機版要小一點 
                 還有清除搜尋列表會整個跑出來的問題
                 應該就是用setState設定成空就好了
+
+                突然明白要怎麼開發sass 了
+                就是以設定概念性樣式, 再依照個別元件建立classname/ styled component微調
+                所以才需要 _customerStyle檔案設定網頁基本樣式
             */}
       <InsearchUl className="search-result">
         {isRender &&

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { apiBusRoute, apiBusStopRoute } from "../../Api";
 import styled from "styled-components";
-import '../../styles/components/showRoute.css'
 
 const StyledUl = styled.ul`
   padding-left: 1rem;
