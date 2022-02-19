@@ -1,23 +1,49 @@
 // 客製化排版內容
+h1, h2, h3{
+    text-align: center;
+}
 
 p{
     margin-bottom: 0.5em;
 }
-
+li{
+    font-size: 20px;
+    p{
+        font-size: 14px;
+    }
+}
 
 input{
+    font-size: 12px;
     background: $primary;
-    color: $secondary;
     border:none;
     border-radius: 10px;
     width: 100%;
-
-    &::placeholder{
-        font-size: 12px;
-    }
+    padding: 5px 10px;
 
     &:focus{
         color:#000;
         background:$secondary;
     }
 }
+
+.btn{
+    font-size: 15px;
+    margin-bottom: 5px;
+    min-width: 70px;
+}
+
+.btn-bus{
+    font-size: 15px;
+    margin-bottom: 5px;
+    min-width: 70px;
+    width: 100%;
+    background: $secondary;
+
+    &:focus{
+        outline: 0;
+        -webkit-box-shadow: inset -0.1rem -0.2rem rgba(238, 238, 238, 0.25);
+                box-shadow: inset -0.1rem -0.2rem rgba(238, 238, 238, 0.25);
+    }
+}
+// 別再糾結, 就爛爛的依照能看的樣子設計就好, 這很正常

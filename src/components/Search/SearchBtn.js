@@ -3,13 +3,6 @@ import { keyboard_base } from "../../utilities/keyboard_config";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import styled from "styled-components";
 
-const StyledBtn = styled(Button)`
-  font-size: 15px;
-  // width: ;
-  // padding-left: 1rem;
-  // padding-right: 1rem;
-  margin-bottom: 5px;
-`;
 
 const SearchBtn = ({ searchTerm, setSearchTerm, setIsRender }) => {
   // const btnRef = useRef(null)
@@ -73,25 +66,24 @@ const SearchBtn = ({ searchTerm, setSearchTerm, setIsRender }) => {
     //         </div>
     //     </div>
     // </div>
-    <Container>
-      <Row className="g-5">
+      <Row>
         {btnKey.map((item) => (
-          <Col xs={2}>
+          <Col xs={2} className="m-2">
             {keyboard_base[item].map((btn) => (
-              <StyledBtn
+              <Button
+                variant="bus"
                 key={btn}
                 value={btn}
                 onClick={handleClick}
                 type="button"
-                className=""
+                className="btn-block"
               >
                 {btn}
-              </StyledBtn>
+              </Button>
             ))}
           </Col>
         ))}
       </Row>
-    </Container>
   );
 };
 

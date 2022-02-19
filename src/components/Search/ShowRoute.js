@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { apiBusRoute, apiBusStopRoute } from "../../Api";
+import { Button, ProgressBar } from "react-bootstrap";
 import styled from "styled-components";
 
 const StyledUl = styled.ul`
   padding-left: 1rem;
-`
+`;
 
 const ShowRoute = ({ city, routeData, setCurrentRender }) => {
   // const [busRoute,setBusRoute] = useState([])
@@ -15,7 +16,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
 
   const [goData, setGoData] = useState([]);
   const [backData, setBackData] = useState([]);
-  const {routeName, depName, desName } = routeData;
+  const { routeName, depName, desName } = routeData;
 
   const handleRefetch = () => {
     fetchData();
@@ -197,7 +198,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
     <div>
       <button
         type="button"
-        class="btn btn-outline-primary"
+        className="btn"
         value="返回搜尋"
         onClick={() => {
           setCurrentRender("Insearch");
@@ -212,23 +213,24 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
         setStatus={setStatus}
         fetchData={fetchData}
       />
-      <StyledUl className="search-result">
+      <StyledUl className="overflow-auto show-route-result">
         {status === "back" &&
           backData &&
-          backData.map((data) => <li className="d-flex display-row" key={data.stopUID}><p>{data.time}</p> {data.stopName}</li>)}
+          backData.map((data) => (
+            <li className="d-flex display-row" key={data.stopUID}>
+              <p>{data.time}</p> {data.stopName}
+            </li>
+          ))}
         {status === "go" &&
           goData &&
-          goData.map((data) => <li className="d-flex display-row" key={data.stopUID}><p>{data.time}</p>{data.stopName}</li>)}
+          goData.map((data) => (
+            <li className="d-flex display-row" key={data.stopUID}>
+              <p>{data.time}</p>
+              {data.stopName}
+            </li>
+          ))}
       </StyledUl>
-
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        value="立即更新"
-        onClick={handleRefetch}
-      >
-        立即更新
-      </button>
+      <Update handleRefetch={handleRefetch} />
     </div>
   );
 };
@@ -243,23 +245,50 @@ const SearchNav = ({ depName, desName, setStatus, fetchData }) => {
   };
   return (
     <>
-      <button
+      <Button
+        variant="serach-nav"
         type="button"
-        class="btn btn-outline-primary"
         value="back"
         ref={statusValue}
         onClick={handleSelectRoute}
       >
         往{desName}
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="serach-nav"
         type="button"
-        class="btn btn-outline-primary"
         value="go"
         ref={statusValue}
         onClick={handleSelectRoute}
       >
         往{depName}
+      </Button>
+    </>
+  );
+};
+
+const Update = (handleRefetch) => {
+  const [progressValue, setProgressValue] = useState(0)
+  const progressRef = useRef()
+  // progressbar 有點莫名其妙地搞人
+
+  useEffect(() => {
+    if(progressRef.current){
+      progressRef.current.animate()
+    }
+    
+  }, [progressValue])
+
+  return (
+    <>
+      <div className="lineprogress"></div>
+      <button
+        className="btn"
+        type="button"
+        value="立即更新"
+        onClick={handleRefetch}
+      >
+        立即更新
       </button>
     </>
   );

@@ -74,7 +74,7 @@ useEffect(() => {
     <div className="container-fluid">
       <span>首頁 /</span>
       <div className="row">
-        <div className="col-md-4">
+        <div className="col-md-3">
           {currentRender === "Insearch" && (
             <Insearch
               busData={busData}
@@ -98,7 +98,7 @@ useEffect(() => {
             />
           )}
         </div>
-        <div className="col-md-8 ">
+        <div className="col-md-9 ">
           <Map />
         </div>
       </div>

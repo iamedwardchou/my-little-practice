@@ -1,3 +1,54 @@
+@import '../helpers/customerStyles';
+.show-route-result{
+    height: 60vh;
+    li{
+        margin-top: 5px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #888888;
+
+        &:focus{
+            background:$primary;
+        }
+        p{
+            display: block;
+            color:white;
+            background: #000;
+            min-width: 77px;
+            max-height: 25px;
+            text-align: center;
+            border-radius: 7px;
+            border-top: 2px;
+            border-bottom: 2px;
+            margin-right: 18px;
+        }
+    }
+}
+
+.btn-serach-nav{
+    background: $secondary;
+    min-height: 20px;
+    width: 50%;
+
+    &:focus{
+        color:white;
+        background: $blue;
+    }
+}
+
+.lineprogress{
+    color:white;
+    background:$dark;
+    height: 5px;
+    transition: width 20s linear 0s;
+    width: 100%;
+}
+
+
+// 太爽鳥, 漸漸掌握怎麼開發基本scss 了
+// 不過要想更加順利的應用框架概念思考, 還是需要經過更多練習的
+// 晚上來接接看 openstreetmap api 囉
+
 // .search-result{
 //     li{
 //         border-bottom: 1px solid #000;
