@@ -16,7 +16,7 @@ export const apiBusRoute = (city, routeName) => busRequest.get(`EstimatedTimeOfA
         headers: getAuthorizationHeader()
     });
 
-export const apiBusStopRoute = (city, routeName) => busRequest.get(`StopOfRoute/City/${city}/${routeName}`,
+export const apiBusRouteStop = (city, routeName) => busRequest.get(`StopOfRoute/City/${city}/${routeName}`,
     {
         headers: getAuthorizationHeader()
     });

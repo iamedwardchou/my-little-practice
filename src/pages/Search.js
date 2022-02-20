@@ -5,14 +5,22 @@ import Map from "../components/Search/Map.js";
 import { CityContext } from "../components/Search/CityContext";
 import { apiBusCity } from "../Api.js";
 
+const DataContext = React.createContext(null)
+
 const Search = () => {
+  const { city } = useContext(CityContext);
+  // 設置busDataProvider 可以順便把目的地等資料放進去傳遞
+
   const [searchTerm, setSearchTerm] = useState("");
+  const [goData, setGoData] = useState([]);
+  const [backData, setBackData] = useState([]);
+
   const [busData, setBusData] = useState(() => {
     const saveBusData = localStorage.getItem("busData");
     const initBusData = JSON.parse(saveBusData);
     return initBusData || [];
   });
-  
+
   // localStorage存 Object 要再查看看對不對
   const [routeData, setRouteData] = useState(() => {
     const saveRouteData = localStorage.getItem("routeData");
@@ -26,21 +34,7 @@ const Search = () => {
       }
     );
   });
-  //   const [routeName, setRouteName] = useState("");
-  //   const [depName, setDepName] = useState("");
-  //   const [desName, setDesName] = useState("");
   const [currentRender, setCurrentRender] = useState("Insearch");
-
-  const { city } = useContext(CityContext);
-  // 設置busDataProvider 可以順便把目的地等資料放進去傳遞
-
-  // useEffect(() => {
-  //     axios.get(API_URL, {
-  //         headers: getAuthorizationHeader()
-  //     }).then((response =>{
-  //         setBusData(response.data)
-  //     }))
-  // }, [])
 
   useEffect(() => {
     localStorage.setItem("busData", JSON.stringify(busData));
@@ -50,60 +44,57 @@ const Search = () => {
     localStorage.setItem("routeData", JSON.stringify(routeData));
   }, [routeData]);
 
-const fetchData = useCallback(() => {
-  async function getData() {
-    try {
-      let res = await apiBusCity(city);
-      if (res.status === 200) {
-        console.log(res.status);
+  const fetchData = useCallback(() => {
+    async function getData() {
+      try {
+        let res = await apiBusCity(city);
+        if (res.status === 200) {
+          console.log(res.status);
+        }
+        setBusData(res.data);
+      } catch (err) {
+        console.error(err);
       }
-      setBusData(res.data);
-    } catch (err) {
-      console.error(err);
     }
-  }
-  getData();
-},[city])
+    getData();
+  }, [city]);
 
-useEffect(() => {
-  fetchData();
-}, [fetchData]);
-
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
-    <div className="container-fluid">
-      <span>首頁 /</span>
-      <div className="row">
-        <div className="col-md-3">
-          {currentRender === "Insearch" && (
-            <Insearch
-              busData={busData}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              setRouteData={setRouteData}
-              // setRouteName={setRouteName}
-              // setDepName={setDepName}
-              // setDesName={setDesName}
-              setCurrentRender={setCurrentRender}
-            />
-          )}
-          {currentRender === "ShowRoute" && (
-            <ShowRoute
-              city={city}
-              routeData={routeData}
-              // routeName={routeName}
-              // depName={depName}
-              // desName={desName}
-              setCurrentRender={setCurrentRender}
-            />
-          )}
-        </div>
-        <div className="col-md-9 ">
-          <Map />
+    <DataContext.Provider value={{goData, setGoData, backData, setBackData}}>
+      <div className="container-fluid">
+        <span>首頁 /</span>
+        <div className="row">
+          <div className="col-md-3">
+            {currentRender === "Insearch" && (
+              <Insearch
+                busData={busData}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                setRouteData={setRouteData}
+                setCurrentRender={setCurrentRender}
+              />
+            )}
+            {currentRender === "ShowRoute" && (
+              <ShowRoute
+                city={city}
+                routeData={routeData}
+                setCurrentRender={setCurrentRender}
+              />
+            )}
+          </div>
+          <div className="col-md-9 ">
+            <Map />
+          </div>
         </div>
       </div>
-    </div>
+    </DataContext.Provider>
   );
 };
 
+export {DataContext}
 export default Search;
+

@@ -1,6 +1,13 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { apiBusRoute, apiBusStopRoute } from "../../Api";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useCallback,
+} from "react";
+import { apiBusRoute, apiBusRouteStop } from "../../Api";
 import { Button, ProgressBar } from "react-bootstrap";
+import { DataContext } from "../../pages/Search";
 import styled from "styled-components";
 
 const StyledUl = styled.ul`
@@ -13,14 +20,24 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
   // const [arrivalTime,setArrivalTime] = useState([])
   const [reFetch, setReFetch] = useState(false);
   const [status, setStatus] = useState("back");
+  // 還要把goData 和 backDataa 設定provider 放到 search.js 檔案
 
-  const [goData, setGoData] = useState([]);
-  const [backData, setBackData] = useState([]);
+  // 在這裡設定data.time 和 data.stopname 的state, 再傳到map.js 中渲染所選站牌的資訊
+  // 根據 routeName 呼叫 api 取得當前路線所有站牌資訊
   const { routeName, depName, desName } = routeData;
+
+  const { goData, setGoData, backData, setBackData } = useContext(DataContext);
+  // const {setGoData} = useContext(DataContext)
+  // const {backData} = useContext(DataContext)
+  // const {setBackData} = useContext(DataContext)
 
   const handleRefetch = () => {
     fetchData();
     setReFetch(true);
+  };
+
+  const handleSearchClick = () => {
+    
   };
 
   function getGoStop(stopRouteData) {
@@ -118,7 +135,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
 
     async function getRoute(routeData, status) {
       try {
-        let res = await apiBusStopRoute(city, routeName);
+        let res = await apiBusRouteStop(city, routeName);
         if (res === 200) {
           console.log(res.status);
         }
@@ -131,7 +148,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
         }
         let time = 0;
         let timeText = "";
-        let dataTest = [];
+        let dataSet = [];
 
         stopData.forEach((stop) => {
           routeData.forEach((route) => {
@@ -151,15 +168,17 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
               dataObj.stopUID = stop.StopUID;
               dataObj.time = timeText;
               dataObj.stopName = stop.StopName.Zh_tw;
-              dataTest.push(dataObj);
-              // console.log(dataTest)
+              dataObj.positionLon = stop.StopPosition.PositionLon;
+              dataObj.positionLat = stop.StopPosition.PositionLat;
+              dataSet.push(dataObj);
+              // console.log(dataSet)
             }
           });
         });
         // 再來設定各種set 再帶到去返程組件渲染
         if (status === "back") {
-          setBackData(dataTest);
-        } else if (status === "go") setGoData(dataTest);
+          setBackData(dataSet);
+        } else if (status === "go") setGoData(dataSet);
       } catch (err) {
         console.error(err);
       }
@@ -217,14 +236,22 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
         {status === "back" &&
           backData &&
           backData.map((data) => (
-            <li className="d-flex display-row" key={data.stopUID}>
+            <li
+              className="d-flex display-row"
+              key={data.stopUID}
+              onClick={handleSearchClick}
+            >
               <p>{data.time}</p> {data.stopName}
             </li>
           ))}
         {status === "go" &&
           goData &&
           goData.map((data) => (
-            <li className="d-flex display-row" key={data.stopUID}>
+            <li
+              className="d-flex display-row"
+              key={data.stopUID}
+              onClick={handleSearchClick}
+            >
               <p>{data.time}</p>
               {data.stopName}
             </li>
@@ -268,16 +295,15 @@ const SearchNav = ({ depName, desName, setStatus, fetchData }) => {
 };
 
 const Update = (handleRefetch) => {
-  const [progressValue, setProgressValue] = useState(0)
-  const progressRef = useRef()
+  const [progressValue, setProgressValue] = useState(0);
+  const progressRef = useRef();
   // progressbar 有點莫名其妙地搞人
 
   useEffect(() => {
-    if(progressRef.current){
-      progressRef.current.animate()
+    if (progressRef.current) {
+      progressRef.current.animate();
     }
-    
-  }, [progressValue])
+  }, [progressValue]);
 
   return (
     <>
