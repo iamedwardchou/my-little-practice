@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Routes, Route } from "react-router-dom";
-import Nav from "./components/Nav.js";
+import BusNav from "./components/Nav.js";
 import Home from "./pages/Home.js";
 import Search from "./pages/Search.js";
 import Copyright from "./components/Copyright.js";
@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <Nav />
+      <BusNav />
       {/* 之前是將city 傳到location 設定setCity 然後Search 元件才有city可用
       這下頭大了 */}
       {/* 原來只要在這裡傳入上面的setCity就好了 */}
