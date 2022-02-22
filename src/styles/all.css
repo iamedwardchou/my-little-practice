@@ -12292,15 +12292,56 @@ input:focus {
   background: #355F8B;
 }
 
-.g-progress {
-  margin: auto;
-  width: 240px;
-  height: 25px;
-  border-radius: 25px;
-  background: #888888;
-  border: 1px solid #eee;
-  -webkit-transition: .3s --progress;
-  transition: .3s --progress;
+.lineprogress {
+  color: white;
+  background: #444444;
+  height: 5px;
+  -webkit-transition: width 20s linear 0s;
+  transition: width 20s linear 0s;
+  width: 100%;
+}
+
+.dialogue {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: #D08181;
+  position: relative;
+  max-height: 82px;
+  max-width: 77px;
+  padding: 5px;
+  border-radius: 12px;
+}
+
+.dialogue::before {
+  position: absolute;
+  content: "";
+  bottom: -40px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-width: 30px;
+  border-style: solid;
+  border-top-color: #D08181;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  z-index: 0;
+}
+
+.dialogue .stop-name {
+  font-size: 10px;
+  color: #EEEEEE;
+  margin-top: 3px;
+  z-index: 1;
+}
+
+.dialogue .stop-time {
+  font-size: 12px;
+  color: #EEEEEE;
+  z-index: 1;
 }
 
 .leaflet-container {

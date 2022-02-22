@@ -5,6 +5,7 @@ import React, {
   useRef,
   useCallback,
 } from "react";
+import busIcon from '../../images/carbon_bus.svg'
 import { apiBusRoute, apiBusRouteStop } from "../../Api";
 import { Button, ProgressBar } from "react-bootstrap";
 import { DataContext } from "../../pages/Search";
@@ -258,6 +259,13 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
           ))}
       </StyledUl>
       <Update handleRefetch={handleRefetch} />
+
+      <div className="dialogue d-flex flex-column align-items-center">
+        <img src={busIcon} alt="" />
+        <div className="stop-name">葦名城 主城</div>
+        <div className="stop-time">進站中</div>
+      </div>
+      
     </div>
   );
 };
