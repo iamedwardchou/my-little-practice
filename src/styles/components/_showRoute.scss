@@ -12,10 +12,34 @@
         &:focus{
             background:$primary;
         }
-        p{
+        p .bus-arriving{
             display: block;
             color:white;
-            background: #000;
+            background: $red;
+            min-width: 77px;
+            max-height: 25px;
+            text-align: center;
+            border-radius: 7px;
+            border-top: 2px;
+            border-bottom: 2px;
+            margin-right: 18px;
+        }
+        p .bus-not-depart{
+            display: block;
+            color:white;
+            background: $dark;
+            min-width: 77px;
+            max-height: 25px;
+            text-align: center;
+            border-radius: 7px;
+            border-top: 2px;
+            border-bottom: 2px;
+            margin-right: 18px;
+        }
+        p .bus-arrival-time{
+            display: block;
+            color:white;
+            background: $blue;
             min-width: 77px;
             max-height: 25px;
             text-align: center;
@@ -39,13 +63,33 @@
 }
 
 .lineprogress{
-    color:white;
-    background:$dark;
-    height: 5px;
-    transition: width 20s linear 0s;
+    // color:white;
+    // background:$dark;
+    // height: 5px;
+    // transition: width 20s linear 0s;
+    // width: 100%;
     width: 100%;
+    height: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background:$light;
+    .percentage{
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: $blue;
+        border-radius: 5px;
+        animation: progress 30000ms ease-in 1;
+    }
+    @keyframes progress {
+        from {
+            width: 0;
+        }
+    }
 }
 
+// 看起來可以用 popup 到站資訊
+// marker 就用圓點表示
 .dialogue{
     justify-content: center;
     background: $red;
@@ -53,7 +97,10 @@
     max-height: 82px;
     max-width: 77px;
     padding: 5px;
+    border: 3px solid;
+    border-color: $primary;
     border-radius: 12px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 
     &::before{
         position:absolute;
@@ -71,6 +118,22 @@
         border-left-color: transparent ;
         z-index:0;
     }
+    &::after{
+        position:absolute;
+        content:"";
+        bottom:-43px;
+        left:50%;
+        transform:translateX(-50%);
+        width: 0;
+        height: 0;
+        border-width:30px;
+        border-style:solid;
+        border-top-color: $primary;
+        border-right-color: transparent ;
+        border-bottom-color: transparent;
+        border-left-color: transparent ;
+        z-index:-1;
+    }
     .stop-name {
         font-size: 10px;
         color:$primary;
@@ -83,10 +146,6 @@
         z-index:1;
     }
 }
-
-// 太爽鳥, 漸漸掌握怎麼開發基本scss 了
-// 不過要想更加順利的應用框架概念思考, 還是需要經過更多練習的
-// 晚上來接接看 openstreetmap api 囉
 
 // .search-result{
 //     li{

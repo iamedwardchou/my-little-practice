@@ -5,7 +5,7 @@ import React, {
   useRef,
   useCallback,
 } from "react";
-import busIcon from '../../images/carbon_bus.svg'
+import busIcon from "../../images/carbon_bus.svg";
 import { apiBusRoute, apiBusRouteStop } from "../../Api";
 import { Button, ProgressBar } from "react-bootstrap";
 import { DataContext } from "../../pages/Search";
@@ -37,9 +37,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
     setReFetch(true);
   };
 
-  const handleSearchClick = () => {
-    
-  };
+  const handleSearchClick = () => {};
 
   function getGoStop(stopRouteData) {
     // 選取站數最多的為路線列表
@@ -242,7 +240,12 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
               key={data.stopUID}
               onClick={handleSearchClick}
             >
-              <p>{data.time}</p> {data.stopName}
+              if(data.time === "進站中" || data.time === "即將到站")
+              {<p className="bus-arriving">{data.time}</p>}
+              else if(data.time ="--")
+              {<p className="bus-not-depart">{data.time}</p>}
+              else{<p className="bus-arrival-time">{data.time}</p>}
+              {data.stopName}
             </li>
           ))}
         {status === "go" &&
@@ -253,7 +256,11 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
               key={data.stopUID}
               onClick={handleSearchClick}
             >
-              <p>{data.time}</p>
+              if(data.time === "進站中" || data.time === "即將到站")
+              {<p className="bus-arriving">{data.time}</p>}
+              else if(data.time ="--")
+              {<p className="bus-not-depart">{data.time}</p>}
+              else{<p className="bus-arrival-time">{data.time}</p>}
               {data.stopName}
             </li>
           ))}
@@ -265,7 +272,6 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
         <div className="stop-name">葦名城 主城</div>
         <div className="stop-time">進站中</div>
       </div>
-      
     </div>
   );
 };
@@ -305,7 +311,6 @@ const SearchNav = ({ depName, desName, setStatus, fetchData }) => {
 const Update = (handleRefetch) => {
   const [progressValue, setProgressValue] = useState(0);
   const progressRef = useRef();
-  // progressbar 有點莫名其妙地搞人
 
   useEffect(() => {
     if (progressRef.current) {
@@ -315,7 +320,9 @@ const Update = (handleRefetch) => {
 
   return (
     <>
-      <div className="lineprogress"></div>
+      <div className="lineprogress">
+        <div className="percentage"></div>
+      </div>
       <button
         className="btn"
         type="button"
