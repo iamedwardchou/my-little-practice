@@ -23,17 +23,17 @@ const maps = {
 // 點選showRoute渲染的站點 以該站點為中心渲染地圖 osm 操作
 // 就這樣子吧 難在思考傳遞資料到OSM 套件是否有我想得如此簡單
 const Map = () => {
-  const [map, setMap] = useState(null);
   const { goData, setGoData, backData, setBackData } = useContext(DataContext);
+  const [map, setMap] = useState(null);
 
   // State vars for our routing machine instance:
   const [routingMachine, setRoutingMachine] = useState(null);
 
   // Start-End points for the routing machine:
-  // const [start, setStart] =
+  // const [start, setStart] = useState([])
   // useState([goData[0].positionLon, goData[0].positionLat])
   // useState([38.9072, -77.0369]);
-  // const [end, setEnd] =
+  // const [end, setEnd] = useState([])
   // useState([goData[-1].positionLon, goData[-1].positionLat])
   // useState([37.7749, -122.4194]);
 
@@ -51,7 +51,12 @@ const Map = () => {
   useEffect(() => {
     // Check For the map instance:
     if (!map) return;
-    if (map) {
+    if (map && backData.length) {
+      console.log(backData)
+      const startPoint = [backData[0].positionLat, backData[0].positionLon]
+      const endPoint = [backData[backData.length - 1].positionLat, backData[52].positionLon]
+
+      console.log([startPoint, endPoint])
       // Assign Control to React Ref:
       RoutingMachineRef.current = L.Routing.control({
         position: "topleft", // Where to position control on map
@@ -63,12 +68,7 @@ const Map = () => {
             },
           ],
         },
-        waypoints: backData.length
-          ? [
-            [backData[0].positionLat, backData[0].positionLon],
-            [backData[-1].positionLat, backData[-1].positionLon],
-          ]
-          : [], // Point A - Point B
+        waypoints: [startPoint, endPoint] // Point A - Point B
       });
       // Save instance to state:
       setRoutingMachine(RoutingMachineRef.current);
@@ -87,7 +87,7 @@ const Map = () => {
   const position = [24.96052, 121.48321];
   const busMarker = new Icon({
     iconUrl: marker,
-    iconSize: [50, 50],
+    iconSize: [25, 25],
   });
 
   return (
@@ -100,14 +100,20 @@ const Map = () => {
         url={maps.base}
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
-      {backData &&
-        backData.map((data) => {
+      {/* <Marker
+      position={position}
+      icon={busMarker}>
+
+      </Marker> */}
+      {/* 為什麼不顯示 */}
+      { backData &&
+        backData.map((data) =>
           <Marker
             key={data.stopUID}
             position={[data.positionLat, data.positionLon]}
-            onClick={() => {
-              setActiveData(data);
-            }}
+            // onClick={() => {
+            //   setActiveData(data);
+            // }}
             icon={busMarker}
           >
             {/* <Popup
@@ -121,8 +127,8 @@ const Map = () => {
               <p>{activeData.time}</p>
             </div>
           </Popup> */}
-          </Marker>;
-        })}
+          </Marker>
+          )}
     </MapContainer>
     // <MapContainer
     //   center={[37.0902, -95.7129]}

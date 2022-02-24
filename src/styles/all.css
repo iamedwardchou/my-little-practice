@@ -12268,10 +12268,36 @@ input:focus {
   background: #EEEEEE;
 }
 
-.show-route-result li p {
+.show-route-result li .bus-arriving {
   display: block;
   color: white;
-  background: #000;
+  background: #D08181;
+  min-width: 77px;
+  max-height: 25px;
+  text-align: center;
+  border-radius: 7px;
+  border-top: 2px;
+  border-bottom: 2px;
+  margin-right: 18px;
+}
+
+.show-route-result li .bus-not-depart {
+  display: block;
+  color: white;
+  background: #444444;
+  min-width: 77px;
+  max-height: 25px;
+  text-align: center;
+  border-radius: 7px;
+  border-top: 2px;
+  border-bottom: 2px;
+  margin-right: 18px;
+}
+
+.show-route-result li .bus-arrival-time {
+  display: block;
+  color: white;
+  background: #355F8B;
   min-width: 77px;
   max-height: 25px;
   text-align: center;

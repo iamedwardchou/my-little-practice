@@ -176,6 +176,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
         });
         // 再來設定各種set 再帶到去返程組件渲染
         if (status === "back") {
+          console.log("setback");
           setBackData(dataSet);
         } else if (status === "go") setGoData(dataSet);
       } catch (err) {
@@ -240,11 +241,17 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
               key={data.stopUID}
               onClick={handleSearchClick}
             >
-              if(data.time === "進站中" || data.time === "即將到站")
-              {<p className="bus-arriving">{data.time}</p>}
-              else if(data.time ="--")
-              {<p className="bus-not-depart">{data.time}</p>}
-              else{<p className="bus-arrival-time">{data.time}</p>}
+              <p
+                className={
+                  data.time === "進站中" || data.time === "即將到站"
+                    ? "bus-arriving"
+                    : data.time === "--"
+                    ? "bus-not-depart"
+                    : "bus-arrival-time"
+                }
+              >
+                {data.time}
+              </p>
               {data.stopName}
             </li>
           ))}
@@ -256,11 +263,17 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
               key={data.stopUID}
               onClick={handleSearchClick}
             >
-              if(data.time === "進站中" || data.time === "即將到站")
-              {<p className="bus-arriving">{data.time}</p>}
-              else if(data.time ="--")
-              {<p className="bus-not-depart">{data.time}</p>}
-              else{<p className="bus-arrival-time">{data.time}</p>}
+              <p
+                className={
+                  data.time === "進站中" || data.time === "即將到站"
+                    ? "bus-arriving"
+                    : data.time === "--"
+                    ? "bus-not-depart"
+                    : "bus-arrival-time"
+                }
+              >
+                {data.time}
+              </p>
               {data.stopName}
             </li>
           ))}

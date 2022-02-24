@@ -12,7 +12,7 @@
         &:focus{
             background:$primary;
         }
-        p .bus-arriving{
+         .bus-arriving{
             display: block;
             color:white;
             background: $red;
@@ -24,7 +24,7 @@
             border-bottom: 2px;
             margin-right: 18px;
         }
-        p .bus-not-depart{
+         .bus-not-depart{
             display: block;
             color:white;
             background: $dark;
@@ -36,7 +36,7 @@
             border-bottom: 2px;
             margin-right: 18px;
         }
-        p .bus-arrival-time{
+         .bus-arrival-time{
             display: block;
             color:white;
             background: $blue;
