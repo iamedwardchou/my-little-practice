@@ -52,11 +52,12 @@ const Map = () => {
     // Check For the map instance:
     if (!map) return;
     if (map && backData.length) {
-      console.log(backData)
-      const startPoint = [backData[0].positionLat, backData[0].positionLon]
-      const endPoint = [backData[backData.length - 1].positionLat, backData[52].positionLon]
+      const waypoint =[] 
 
-      console.log([startPoint, endPoint])
+      backData.forEach(element => {
+        waypoint.push([element.positionLat, element.positionLon])
+      });
+
       // Assign Control to React Ref:
       RoutingMachineRef.current = L.Routing.control({
         position: "topleft", // Where to position control on map
@@ -68,7 +69,7 @@ const Map = () => {
             },
           ],
         },
-        waypoints: [startPoint, endPoint] // Point A - Point B
+        waypoints: waypoint // Point A - Point B
       });
       // Save instance to state:
       setRoutingMachine(RoutingMachineRef.current);
@@ -105,7 +106,6 @@ const Map = () => {
       icon={busMarker}>
 
       </Marker> */}
-      {/* 為什麼不顯示 */}
       { backData &&
         backData.map((data) =>
           <Marker
