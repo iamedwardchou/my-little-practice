@@ -9,6 +9,7 @@ import busIcon from "../../images/carbon_bus.svg";
 import { apiBusRoute, apiBusRouteStop } from "../../Api";
 import { Button, ProgressBar } from "react-bootstrap";
 import { DataContext } from "../../pages/Search";
+import {PopupContext} from '../../pages/Search';
 import styled from "styled-components";
 
 const StyledUl = styled.ul`
@@ -21,13 +22,14 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
   // const [arrivalTime,setArrivalTime] = useState([])
   const [reFetch, setReFetch] = useState(false);
   const [status, setStatus] = useState("back");
-  // 還要把goData 和 backDataa 設定provider 放到 search.js 檔案
+
 
   // 在這裡設定data.time 和 data.stopname 的state, 再傳到map.js 中渲染所選站牌的資訊
   // 根據 routeName 呼叫 api 取得當前路線所有站牌資訊
   const { routeName, depName, desName } = routeData;
 
   const { goData, setGoData, backData, setBackData } = useContext(DataContext);
+  const {setActivePopup} = useContext(PopupContext);
   // const {setGoData} = useContext(DataContext)
   // const {backData} = useContext(DataContext)
   // const {setBackData} = useContext(DataContext)
@@ -36,8 +38,6 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
     fetchData();
     setReFetch(true);
   };
-
-  const handleSearchClick = () => {};
 
   function getGoStop(stopRouteData) {
     // 選取站數最多的為路線列表
@@ -239,7 +239,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
             <li
               className="d-flex display-row"
               key={data.stopUID}
-              onClick={handleSearchClick}
+              onClick={()=> setActivePopup(data)}
             >
               <p
                 className={
@@ -261,7 +261,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
             <li
               className="d-flex display-row"
               key={data.stopUID}
-              onClick={handleSearchClick}
+              onClick={()=> setActivePopup(data)}
             >
               <p
                 className={

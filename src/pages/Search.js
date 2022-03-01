@@ -6,6 +6,7 @@ import { CityContext } from "../components/Search/CityContext";
 import { apiBusCity } from "../Api.js";
 
 const DataContext = React.createContext(null)
+const PopupContext = React.createContext(null)
 
 const Search = () => {
   const { city } = useContext(CityContext);
@@ -14,6 +15,9 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [goData, setGoData] = useState([]);
   const [backData, setBackData] = useState([]);
+  // 點選站牌列表觸發到站資訊
+  const [activePopup, setActivePopup] = useState(null);
+
 
   const [busData, setBusData] = useState(() => {
     const saveBusData = localStorage.getItem("busData");
@@ -65,6 +69,7 @@ const Search = () => {
 
   return (
     <DataContext.Provider value={{goData, setGoData, backData, setBackData}}>
+      <PopupContext.Provider value={{activePopup, setActivePopup}}>
       <div className="container-fluid">
         <span>首頁 /</span>
         <div className="row">
@@ -91,10 +96,12 @@ const Search = () => {
           </div>
         </div>
       </div>
+      </PopupContext.Provider>
     </DataContext.Provider>
   );
 };
 
 export {DataContext}
+export {PopupContext}
 export default Search;
 

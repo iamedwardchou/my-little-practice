@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { DataContext } from "../../pages/Search";
+import { PopupContext } from "../../pages/Search";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { Icon } from "leaflet";
@@ -24,6 +25,8 @@ const maps = {
 // 就這樣子吧 難在思考傳遞資料到OSM 套件是否有我想得如此簡單
 const Map = () => {
   const { goData, setGoData, backData, setBackData } = useContext(DataContext);
+  const { activePopup } = useContext(PopupContext);
+
   const [map, setMap] = useState(null);
 
   // State vars for our routing machine instance:
@@ -36,8 +39,6 @@ const Map = () => {
   // const [end, setEnd] = useState([])
   // useState([goData[-1].positionLon, goData[-1].positionLat])
   // useState([37.7749, -122.4194]);
-
-  const [activeData, setActiveData] = useState(null);
 
   // 建立兩個圖層, 依照去回路線切換
   // const [currentBus, setCurrentBus] = useState({
@@ -52,10 +53,15 @@ const Map = () => {
     // Check For the map instance:
     if (!map) return;
     if (map && backData.length) {
-      const waypoint =[] 
+      const waypoint = [];
 
-      backData.forEach(element => {
-        waypoint.push([element.positionLat, element.positionLon])
+      const start = [backData[0].positionLat, backData[0].positionLon];
+      const end = [
+        backData[backData.length - 1].positionLat,
+        backData[backData.length - 1].positionLon,
+      ];
+      backData.forEach((element) => {
+        waypoint.push([element.positionLat, element.positionLon]);
       });
 
       // Assign Control to React Ref:
@@ -69,7 +75,10 @@ const Map = () => {
             },
           ],
         },
-        waypoints: waypoint // Point A - Point B
+        waypoints: [start, end],
+        waypointMode: "connect",
+        createMarker: () => null,
+        // 等實作點擊站牌會顯示該站牌時間資訊, marker 也會同時出現
       });
       // Save instance to state:
       setRoutingMachine(RoutingMachineRef.current);
@@ -106,8 +115,8 @@ const Map = () => {
       icon={busMarker}>
 
       </Marker> */}
-      { backData &&
-        backData.map((data) =>
+      {backData &&
+        backData.map((data) => (
           <Marker
             key={data.stopUID}
             position={[data.positionLat, data.positionLon]}
@@ -128,7 +137,17 @@ const Map = () => {
             </div>
           </Popup> */}
           </Marker>
-          )}
+        ))}
+      {activePopup && (
+        <Popup
+          position={[activePopup.positionLat, activePopup.positionLon]}
+        >
+          <>
+          <div className="stop-name">{activePopup.stopName}</div>
+          <div className="stop-time">{activePopup.time}</div>
+          </>
+        </Popup>
+      )}
     </MapContainer>
     // <MapContainer
     //   center={[37.0902, -95.7129]}
