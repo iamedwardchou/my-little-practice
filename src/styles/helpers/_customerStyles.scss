@@ -1,4 +1,6 @@
 // 客製化排版內容
+@import '../helpers//variables';
+
 h1, h2, h3{
     text-align: center;
 }
@@ -11,6 +13,10 @@ li{
     p{
         font-size: 14px;
     }
+}
+
+span{
+    color: $black;
 }
 
 input{

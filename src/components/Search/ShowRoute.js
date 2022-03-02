@@ -6,10 +6,11 @@ import React, {
   useCallback,
 } from "react";
 import busIcon from "../../images/carbon_bus.svg";
+import ProgressBar from "./ProgressBar";
 import { apiBusRoute, apiBusRouteStop } from "../../Api";
-import { Button, ProgressBar } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { DataContext } from "../../pages/Search";
-import {PopupContext} from '../../pages/Search';
+import { PopupContext } from "../../pages/Search";
 import styled from "styled-components";
 
 const StyledUl = styled.ul`
@@ -20,23 +21,23 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
   // const [busRoute,setBusRoute] = useState([])
   // const [stopRouteData,setStopRouteData] = useState([])
   // const [arrivalTime,setArrivalTime] = useState([])
-  const [reFetch, setReFetch] = useState(false);
-  const [status, setStatus] = useState("back");
 
+  // const [reFetch, setReFetch] = useState(false);
+  const [status, setStatus] = useState("back");
 
   // 在這裡設定data.time 和 data.stopname 的state, 再傳到map.js 中渲染所選站牌的資訊
   // 根據 routeName 呼叫 api 取得當前路線所有站牌資訊
   const { routeName, depName, desName } = routeData;
 
   const { goData, setGoData, backData, setBackData } = useContext(DataContext);
-  const {setActivePopup} = useContext(PopupContext);
+  const { setActivePopup } = useContext(PopupContext);
   // const {setGoData} = useContext(DataContext)
   // const {backData} = useContext(DataContext)
   // const {setBackData} = useContext(DataContext)
 
   const handleRefetch = () => {
     fetchData();
-    setReFetch(true);
+    // setReFetch(true);
   };
 
   function getGoStop(stopRouteData) {
@@ -184,7 +185,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
       }
     }
     getBus();
-    setReFetch(false);
+    // setReFetch(false);
   }, [status]);
 
   useEffect(() => {
@@ -239,7 +240,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
             <li
               className="d-flex display-row"
               key={data.stopUID}
-              onClick={()=> setActivePopup(data)}
+              onClick={() => setActivePopup(data)}
             >
               <p
                 className={
@@ -261,7 +262,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
             <li
               className="d-flex display-row"
               key={data.stopUID}
-              onClick={()=> setActivePopup(data)}
+              onClick={() => setActivePopup(data)}
             >
               <p
                 className={
@@ -278,7 +279,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
             </li>
           ))}
       </StyledUl>
-      <Update handleRefetch={handleRefetch} />
+      <Update fetchData={fetchData} />
 
       <div className="dialogue d-flex flex-column align-items-center">
         <img src={busIcon} alt="" />
@@ -321,26 +322,55 @@ const SearchNav = ({ depName, desName, setStatus, fetchData }) => {
   );
 };
 
-const Update = (handleRefetch) => {
-  const [progressValue, setProgressValue] = useState(0);
+let interval = undefined;
+
+const Update = ({ fetchData }) => {
   const progressRef = useRef();
 
+  const [running, setRunning] = useState(false);
+  const [progress, setProgress] = useState(0);
+
   useEffect(() => {
-    if (progressRef.current) {
-      progressRef.current.animate();
+    setRunning(true);
+    if (running) {
+      interval = setInterval(() => {
+        setProgress((prev) => prev + 1);
+      }, 300);
+    } else {
+      clearInterval(interval);
     }
-  }, [progressValue]);
+  }, [running]);
+
+  useEffect(() => {
+    if (progress === 100) {
+      setRunning(false);
+      setProgress(0);
+      clearInterval(interval);
+    }
+  }, [progress]);
+
+  // useEffect(() => {
+  //   if (progressRef.current) {
+  //     progressRef.current.animate();
+  //   }
+  // }, [progresssValue]);
 
   return (
     <>
-      <div className="lineprogress">
-        <div className="percentage"></div>
-      </div>
+      {/* <div className="progress-bar-container">
+        <div className="progress-bar"></div>
+      </div> */}
+      <ProgressBar progress={progress} />
+
       <button
         className="btn"
         type="button"
         value="立即更新"
-        onClick={handleRefetch}
+        onClick={() => {
+          setRunning(false);
+          setProgress(0);
+          fetchData()
+        }}
       >
         立即更新
       </button>

@@ -7,6 +7,7 @@ import Copyright from "./components/Copyright.js";
 import { CityContext } from "./components/Search/CityContext";
 // import "./styles/base/base.css";
 
+
 function App() {
   const [city, setCity] = useState(()=>{
     const savedCity = localStorage.getItem("city")
@@ -23,8 +24,6 @@ function App() {
   return (
     <>
       <BusNav />
-      {/* 之前是將city 傳到location 設定setCity 然後Search 元件才有city可用
-      這下頭大了 */}
       {/* 原來只要在這裡傳入上面的setCity就好了 */}
       <CityContext.Provider value={{city, setCity}}>
         <Routes>
