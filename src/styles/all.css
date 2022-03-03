@@ -12267,9 +12267,22 @@ input:focus {
 
 .breadcrumb {
   background: #F8F8F8;
+  padding: 10px;
+  padding-left: 66px;
   margin-bottom: 0px;
   -webkit-box-shadow: inset 0 3px 5px 1px rgba(0, 0, 0, 0.2);
           box-shadow: inset 0 3px 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+.search-block {
+  -webkit-box-shadow: 3px 0 5px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 3px 0 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+.key-word-search {
+  padding-top: 10px;
+  padding-right: 0px;
+  padding-left: 0px;
 }
 
 .show-route-result {

@@ -90,7 +90,7 @@ const Search = () => {
         </div>
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-3">
+            <div className="search-block col-md-3">
               {currentRender === "Insearch" && (
                 <Insearch
                   busData={busData}
@@ -109,7 +109,7 @@ const Search = () => {
               )}
             </div>
             <div className="col-md-9 ">
-              <Map />
+              <Map/>
             </div>
           </div>
         </div>
