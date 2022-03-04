@@ -15,6 +15,7 @@ import styled from "styled-components";
 
 const StyledUl = styled.ul`
   padding-left: 1rem;
+  padding-right: 1rem;
 `;
 
 const ShowRoute = ({ city, routeData, setCurrentRender }) => {
@@ -281,11 +282,11 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
       </StyledUl>
       <Update fetchData={fetchData} />
 
-      <div className="dialogue d-flex flex-column align-items-center">
+      {/* <div className="dialogue d-flex flex-column align-items-center">
         <img src={busIcon} alt="" />
         <div className="stop-name">葦名城 主城</div>
         <div className="stop-time">進站中</div>
-      </div>
+      </div> */}
     </div>
   );
 };

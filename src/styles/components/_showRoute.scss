@@ -1,169 +1,176 @@
-@import '../helpers/customerStyles';
-@import '../helpers//variables';
+@import "../helpers/customerStyles";
+@import "../helpers//variables";
 
-.breadcrumb{
-    background:$light-gray;
-    padding:10px;
-    padding-left:66px;
-    margin-bottom: 0px;
-    box-shadow: inset 0 3px 5px 1px rgba(0, 0, 0, 0.2)
+.breadcrumb {
+  background: $light-gray;
+  padding: 10px;
+  padding-left: 66px;
+  margin-bottom: 0px;
+  box-shadow: inset 0 3px 5px 1px rgba(0, 0, 0, 0.2);
 }
 
-.search-block{
-    box-shadow: 3px 0 5px 1px rgba(0, 0, 0, 0.2)
+.search-block {
+  box-shadow: 3px 0 5px 1px rgba(0, 0, 0, 0.2);
+}
+.search-result-block {
+  height: 80vh;
+  padding-right: 0px;
+  padding-left: 0px;
 }
 
-.key-word-search{
-    padding-top:10px;
-    padding-right: 0px;
-    padding-left:0px;
+.key-word-search {
+  padding-top: 10px;
 }
 
-.show-route-result{
-    height: 60vh;
-    li{
-        margin-top: 5px;
-        padding-top: 15px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid #888888;
+.show-route-result {
+  margin-top: 7px;
+  height:47vh;
+  li {
+    margin-top: 5px;
+    font-size: 14px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #888888;
 
-        &:focus{
-            background:$primary;
-        }
-         .bus-arriving{
-            display: block;
-            color:white;
-            background: $red;
-            min-width: 77px;
-            max-height: 25px;
-            text-align: center;
-            border-radius: 7px;
-            border-top: 2px;
-            border-bottom: 2px;
-            margin-right: 18px;
-        }
-         .bus-not-depart{
-            display: block;
-            color:white;
-            background: $dark;
-            min-width: 77px;
-            max-height: 25px;
-            text-align: center;
-            border-radius: 7px;
-            border-top: 2px;
-            border-bottom: 2px;
-            margin-right: 18px;
-        }
-         .bus-arrival-time{
-            display: block;
-            color:white;
-            background: $blue;
-            min-width: 77px;
-            max-height: 25px;
-            text-align: center;
-            border-radius: 7px;
-            border-top: 2px;
-            border-bottom: 2px;
-            margin-right: 18px;
-        }
+    &:focus {
+      background: $primary;
     }
-}
 
-.btn-serach-nav{
-    background: $secondary;
-    min-height: 20px;
-    width: 50%;
-
-    &:focus{
-        color:white;
-        background: $blue;
+    .bus-arriving {
+      display: block;
+      color: white;
+      background: $red;
+      min-width: 77px;
+      max-height: 25px;
+      text-align: center;
+      border-radius: 7px;
+      border-top: 2px;
+      border-bottom: 2px;
+      margin-right: 18px;
     }
+    .bus-not-depart {
+      display: block;
+      color: white;
+      background: $dark;
+      min-width: 77px;
+      max-height: 25px;
+      text-align: center;
+      border-radius: 7px;
+      border-top: 2px;
+      border-bottom: 2px;
+      margin-right: 18px;
+    }
+    .bus-arrival-time {
+      display: block;
+      color: white;
+      background: $blue;
+      min-width: 77px;
+      max-height: 25px;
+      text-align: center;
+      border-radius: 7px;
+      border-top: 2px;
+      border-bottom: 2px;
+      margin-right: 18px;
+    }
+  }
 }
 
-.progress-bar-container{
-    // color:white;
-    // background:$dark;
-    // height: 5px;
-    // transition: width 20s linear 0s;
-    // width: 100%;
+.btn-serach-nav {
+  background: $secondary;
+  min-height: 20px;
+  width: 50%;
+
+  &:focus {
+    color: white;
+    background: $blue;
+  }
+}
+
+
+.progress-bar-container {
+  // color:white;
+  // background:$dark;
+  // height: 5px;
+  // transition: width 20s linear 0s;
+  // width: 100%;
+  width: 100%;
+  height: 5px;
+  margin-top: 10px;
+  border-radius: 5px;
+  background: $light;
+  .progress-bar {
+    display: block;
     width: 100%;
-    height: 5px;
-    margin-top: 10px;
+    height: 100%;
+    background-color: $blue;
     border-radius: 5px;
-    background:$light;
-    .progress-bar{
-        display: block;
-        width: 100%;
-        height: 100%;
-        background-color: $blue;
-        border-radius: 5px;
-        animation: progress 30000ms ease-in 1;
+    animation: progress 30000ms ease-in 1;
+  }
+  @keyframes progress {
+    from {
+      width: 0;
     }
-    @keyframes progress {
-        from {
-            width: 0;
-        }
-    }
+  }
 }
 
 // 看起來可以用 popup 到站資訊
 // marker 就用圓點表示
-.dialogue{
-    justify-content: center;
-    background: $red;
-    position: relative;
-    max-height: 82px;
-    max-width: 77px;
-    padding: 5px;
-    border: 3px solid;
-    border-color: $primary;
-    border-radius: 12px;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+.dialogue {
+  justify-content: center;
+  background: $red;
+  position: relative;
+  max-height: 82px;
+  max-width: 77px;
+  padding: 5px;
+  border: 3px solid;
+  border-color: $primary;
+  border-radius: 12px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 
-    &::before{
-        position:absolute;
-        content:"";
-        bottom:-40px;
-        left:50%;
-        transform:translateX(-50%);
-        width: 0;
-        height: 0;
-        border-width:30px;
-        border-style:solid;
-        border-top-color:$red;
-        border-right-color: transparent ;
-        border-bottom-color: transparent;
-        border-left-color: transparent ;
-        z-index:0;
-    }
-    &::after{
-        position:absolute;
-        content:"";
-        bottom:-43px;
-        left:50%;
-        transform:translateX(-50%);
-        width: 0;
-        height: 0;
-        border-width:30px;
-        border-style:solid;
-        border-top-color: $primary;
-        border-right-color: transparent ;
-        border-bottom-color: transparent;
-        border-left-color: transparent ;
-        z-index:-1;
-    }
-    .stop-name {
-        font-size: 10px;
-        color:$primary;
-        margin-top: 3px;
-        z-index:1;
-      }
-    .stop-time{
-        font-size: 12px;
-        font-weight:bold;
-        color: $primary;
-        z-index:1;
-    }
+  &::before {
+    position: absolute;
+    content: "";
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-width: 30px;
+    border-style: solid;
+    border-top-color: $red;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    z-index: 0;
+  }
+  &::after {
+    position: absolute;
+    content: "";
+    bottom: -43px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-width: 30px;
+    border-style: solid;
+    border-top-color: $primary;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    z-index: -1;
+  }
+  .stop-name {
+    font-size: 10px;
+    color: $primary;
+    margin-top: 3px;
+    z-index: 1;
+  }
+  .stop-time {
+    font-size: 12px;
+    font-weight: bold;
+    color: $primary;
+    z-index: 1;
+  }
 }
 
 // .search-result{

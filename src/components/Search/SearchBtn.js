@@ -3,7 +3,6 @@ import { keyboard_base } from "../../utilities/keyboard_config";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import styled from "styled-components";
 
-
 const SearchBtn = ({ searchTerm, setSearchTerm, setIsRender }) => {
   // const btnRef = useRef(null)
 
@@ -66,9 +65,10 @@ const SearchBtn = ({ searchTerm, setSearchTerm, setIsRender }) => {
     //         </div>
     //     </div>
     // </div>
-      <Row>
+    // <Container>
+      <Row className="justify-content-center py-2 search-keyboard">
         {btnKey.map((item) => (
-          <Col xs={2} className="m-2">
+          <Col xs={2} className="m-2 ps-0">
             {keyboard_base[item].map((btn) => (
               <Button
                 variant="bus"
@@ -84,6 +84,7 @@ const SearchBtn = ({ searchTerm, setSearchTerm, setIsRender }) => {
           </Col>
         ))}
       </Row>
+    // </Container>
   );
 };
 
