@@ -12082,6 +12082,46 @@ input:focus {
   box-shadow: inset -0.1rem -0.2rem rgba(238, 238, 238, 0.25);
 }
 
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .pc-nav .navigation {
+    display: none;
+  }
+  .mobile-nav {
+    display: block;
+  }
+  .mobile-nav .hamburger {
+    margin-left: 17px;
+    cursor: pointer;
+  }
+}
+
+.mobile-modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 35vh;
+  color: #fff;
+  background: #444444;
+}
+
+.close-btn {
+  position: absolute;
+  right: 5%;
+}
+
+.bus-logo {
+  max-width: 162px;
+}
+
+.nav-link {
+  font-size: 15px;
+}
+
 .location-bg {
   background: #C4C4C4;
 }
@@ -12308,16 +12348,6 @@ input:focus {
 
 .show-route-result li:focus {
   background: #EEEEEE;
-}
-
-.show-route-result li::after {
-  content: '';
-  top: auto;
-  bottom: 0;
-  right: auto;
-  height: 6px;
-  width: 105px;
-  background-color: #32b66b;
 }
 
 .show-route-result li .bus-arriving {

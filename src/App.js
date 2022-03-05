@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { Routes, Route } from "react-router-dom";
-import BusNav from "./components/Nav.js";
+import PcNav from "./components/Navs/PcNav"
+import MobileNav from "./components/Navs/MobileNav"
 import Home from "./pages/Home.js";
 import Search from "./pages/Search.js";
 import Copyright from "./components/Copyright.js";
@@ -23,7 +24,8 @@ function App() {
 
   return (
     <>
-      <BusNav />
+      <PcNav />
+      <MobileNav/>
       {/* 原來只要在這裡傳入上面的setCity就好了 */}
       <CityContext.Provider value={{city, setCity}}>
         <Routes>
