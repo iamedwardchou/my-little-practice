@@ -1,3 +1,6 @@
+@import '../helpers//variables';
+
+
 .mobile-nav{
     display: none;
 }
@@ -21,19 +24,31 @@
 }
 
 .mobile-modal{
+    display: flex;
+    align-items: flex-start;
     position:absolute;
     top: 0;
     right:0;
-    height: 100vh;
+    height: 110%;
     width:35vh;
-    color:#fff;
-    background:#444444;
+    background:#fff;
+    .navbar-brand{
+        width:90%;
+        border-bottom: 1px solid $light;
+    }
+    .navbar-nav{
+        .nav-link{
+            width:35vh;
+            padding-left:0px;
+            border-bottom: 1px solid $light;
+        }            
+    }
 }
 
 // temporary
 .close-btn{
-    position:absolute;
-    right:5%;
+    // position:absolute;
+    // right:5%;
 }
 
 .bus-logo{
@@ -58,9 +73,16 @@
 
 .copy-right{
     // height: 6vh;
+    font-size: 12px;
     background: #444444;
     margin: 0 auto;
 }
+
+.location{
+    min-width: 160px;
+    min-height:125px;
+}
+
 .location-text{
     font-size: 1rem;
 }

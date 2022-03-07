@@ -280,6 +280,7 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
             </li>
           ))}
       </StyledUl>
+      <CountDownTimer />
       <Update fetchData={fetchData} />
 
       {/* <div className="dialogue d-flex flex-column align-items-center">
@@ -370,12 +371,46 @@ const Update = ({ fetchData }) => {
         onClick={() => {
           setRunning(false);
           setProgress(0);
-          fetchData()
+          fetchData();
         }}
       >
         立即更新
       </button>
     </>
+  );
+};
+
+const CountDownTimer = () => {
+  const time = 30;
+  const [remainSecond, setRemainSecond] = useState(0);
+
+  // effect
+  useEffect(() => {
+    const countDownSecond = time;
+
+    // 產生 Timer
+    console.log(`[timer] == start count down ${countDownSecond}s  ==`);
+    const startTime = Date.now();
+    const countDownTimer = setInterval(() => {
+      // 計算剩餘秒數
+      const pastSeconds = parseInt((Date.now() - startTime) / 1000);
+      const remain = countDownSecond - pastSeconds;
+      setRemainSecond(remain < 0 ? 0 : remain);
+      console.log("[timer] count down: ", remain);
+
+      // 檢查是否結束
+      if (remain <= 0) {
+        clearInterval(countDownTimer);
+        console.log(`[timer] == stop count down ${countDownSecond}s  ==`);
+      }
+    }, 1000);
+  }, []); // 相依 prop / state 值的 Effect
+  return (
+    <div className='tp-count-down-timer'>
+      <div className='tp-count-down-timer__time'>
+        {new Date(remainSecond * 1000).toISOString().substr(11, 8)}
+      </div>
+    </div>
   );
 };
 

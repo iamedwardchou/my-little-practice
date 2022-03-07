@@ -10,6 +10,7 @@ import {
   Marker,
   Popup,
   LayersControl,
+  useMapEvent
 } from "react-leaflet";
 import marker from "../../images/公車站點 - 到站.svg";
 // Import the JS and CSS:
@@ -106,6 +107,7 @@ const Map = () => {
       zoom={12}
       whenCreated={(map) => setMap(map)}
     >
+      {/* <MyComponent position={position}/> */}
       <TileLayer
         url={maps.base}
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -167,5 +169,16 @@ const Map = () => {
     // </MapContainer>
   );
 };
+
+// const MyComponent = ({position}) => {
+//   const map = useMapEvent('click', () => {
+//     map.setCenter(position)
+//   })
+//   return (
+//     <>
+//     </>
+//   )
+// }
+// setCenter to focusing location
 
 export default Map;
