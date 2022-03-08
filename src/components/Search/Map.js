@@ -10,7 +10,7 @@ import {
   Marker,
   Popup,
   LayersControl,
-  useMapEvent
+  useMapEvent,
 } from "react-leaflet";
 import marker from "../../images/公車站點 - 到站.svg";
 // Import the JS and CSS:
@@ -26,7 +26,7 @@ const maps = {
 // 就這樣子吧 難在思考傳遞資料到OSM 套件是否有我想得如此簡單
 const Map = () => {
   const { goData, setGoData, backData, setBackData } = useContext(DataContext);
-  const { activePopup } = useContext(PopupContext);
+  const {mapRef, activePopup } = useContext(PopupContext);
 
   const [map, setMap] = useState(null);
 
@@ -48,7 +48,23 @@ const Map = () => {
   // });
 
   // Ref for our routing machine instace:
+
   const RoutingMachineRef = useRef(null);
+
+  // const mapRef = useRef();
+  // function handleSetView() {
+  //   const { current = {} } = mapRef;
+  //   const { leatletElement: map } = current;
+  //   map.setView([], 14);
+  // }
+
+  // function handleFlyto() {
+  //   const { current = {} } = mapRef;
+  //   const { leatletElement: map } = current;
+  //   map.flyto([], 14, {
+  //     duration: 2,
+  //   });
+  // }
 
   useEffect(() => {
     // Check For the map instance:
@@ -92,7 +108,7 @@ const Map = () => {
     if (routingMachine) {
       routingMachine.addTo(map);
     }
-  }, [routingMachine]);
+  }, [map, routingMachine]);
 
   // const position = [51.505, -0.09]
   const position = [24.96052, 121.48321];
@@ -105,18 +121,13 @@ const Map = () => {
     <MapContainer
       center={position}
       zoom={12}
-      whenCreated={(map) => setMap(map)}
+      whenCreated={map => {setMap(map); mapRef.current=map }}
     >
       {/* <MyComponent position={position}/> */}
       <TileLayer
         url={maps.base}
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
-      {/* <Marker
-      position={position}
-      icon={busMarker}>
-
-      </Marker> */}
       {backData &&
         backData.map((data) => (
           <Marker
@@ -141,12 +152,10 @@ const Map = () => {
           </Marker>
         ))}
       {activePopup && (
-        <Popup
-          position={[activePopup.positionLat, activePopup.positionLon]}
-        >
+        <Popup position={[activePopup.positionLat, activePopup.positionLon]}>
           <>
-          <div className="stop-name">{activePopup.stopName}</div>
-          <div className="stop-time">{activePopup.time}</div>
+            <div className="stop-name">{activePopup.stopName}</div>
+            <div className="stop-time">{activePopup.time}</div>
           </>
         </Popup>
       )}

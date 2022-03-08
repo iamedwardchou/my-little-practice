@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import SearchBtn from "./SearchBtn";
 import styled from "styled-components";
+import {IoIosClose} from "react-icons/io"
 
 const InsearchUl = styled.ul`
   padding-left: 0;
@@ -53,6 +54,7 @@ const Insearch = (props) => {
         value={searchTerm}
         onChange={handleSearch}
       />
+      <IoIosClose/>
       {/* 用vh 設定渲染列表的高度，手機版要小一點 
                 還有清除搜尋列表會整個跑出來的問題
                 應該就是用setState設定成空就好了

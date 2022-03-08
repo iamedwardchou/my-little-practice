@@ -11,6 +11,7 @@ import { apiBusRoute, apiBusRouteStop } from "../../Api";
 import { Button } from "react-bootstrap";
 import { DataContext } from "../../pages/Search";
 import { PopupContext } from "../../pages/Search";
+import {FaLessThan} from "react-icons/fa"
 import styled from "styled-components";
 
 const StyledUl = styled.ul`
@@ -36,77 +37,27 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
   // const {backData} = useContext(DataContext)
   // const {setBackData} = useContext(DataContext)
 
+  // 地圖相關顯示
+  const {mapRef } = useContext(PopupContext);
+
+  function handleSetView(lat, lon) {
+    const { current = {} } = mapRef;
+    const { leatletElement: map } = current;
+    map.setView([lat, lon], 14);
+  }
+
+  function handleFlyto(lat, lon) {
+    const { current = {} } = mapRef;
+    const { leatletElement: map } = current;
+    map.flyto([lat, lon], 14, {
+      duration: 2,
+    });
+  }
+
   const handleRefetch = () => {
     fetchData();
     // setReFetch(true);
   };
-
-  function getGoStop(stopRouteData) {
-    // 選取站數最多的為路線列表
-    const GoStops = stopRouteData.filter(
-      (item) => item.Direction && item.RouteName.Zh_tw === routeName
-    );
-    let maxStopsNum = 0;
-    let stopIndex = 0;
-    GoStops.forEach((item, index) => {
-      if (item.Stops.length > maxStopsNum) {
-        maxStopsNum = item.Stops.length;
-        stopIndex = index;
-      }
-    });
-    let stops = GoStops[stopIndex].Stops;
-    // console.log(stops)
-    return stops;
-  }
-  function getGoRoute(busRoute) {
-    const catchData = busRoute.filter(
-      (item) => item.Direction && item.RouteName.Zh_tw === routeName
-    );
-
-    let busGoData = [];
-
-    catchData.forEach((item) => {
-      busGoData.push({
-        estimateTime: item.EstimateTime, //到站時間預估(秒)
-        stopUID: item.StopUID, //站牌唯一識別代碼
-      });
-    });
-    return busGoData;
-  }
-  function getBackStop(stopRouteData) {
-    // 選取站數最多的為路線列表
-    const backStops = stopRouteData.filter(
-      (item) => !item.Direction && item.RouteName.Zh_tw === routeName
-    );
-    let maxStopsNum = 0;
-    let stopIndex = 0;
-    backStops.forEach((item, index) => {
-      if (item.Stops.length > maxStopsNum) {
-        maxStopsNum = item.Stops.length;
-        stopIndex = index;
-      }
-    });
-    // console.log(backStops)
-
-    let stops = backStops[stopIndex].Stops;
-    // console.log(stops)
-    return stops;
-  }
-  function getBackRoute(busRoute) {
-    const cachebackData = busRoute.filter(
-      (item) => !item.Direction && item.RouteName.Zh_tw === routeName
-    );
-
-    let busBackData = [];
-
-    cachebackData.forEach((item) => {
-      busBackData.push({
-        estimateTime: item.EstimateTime, //到站時間預估(秒)
-        stopUID: item.StopUID, //站牌唯一識別代碼
-      });
-    });
-    return busBackData;
-  }
 
   const fetchData = useCallback(() => {
     let goRouteData = [];
@@ -185,9 +136,76 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
         console.error(err);
       }
     }
+
+    const getGoStop = (stopRouteData) => {
+      // 選取站數最多的為路線列表
+      const GoStops = stopRouteData.filter(
+        (item) => item.Direction && item.RouteName.Zh_tw === routeName
+      );
+      let maxStopsNum = 0;
+      let stopIndex = 0;
+      GoStops.forEach((item, index) => {
+        if (item.Stops.length > maxStopsNum) {
+          maxStopsNum = item.Stops.length;
+          stopIndex = index;
+        }
+      });
+      let stops = GoStops[stopIndex].Stops;
+      // console.log(stops)
+      return stops;
+    };
+    const getGoRoute = (busRoute) => {
+      const catchData = busRoute.filter(
+        (item) => item.Direction && item.RouteName.Zh_tw === routeName
+      );
+
+      let busGoData = [];
+
+      catchData.forEach((item) => {
+        busGoData.push({
+          estimateTime: item.EstimateTime, //到站時間預估(秒)
+          stopUID: item.StopUID, //站牌唯一識別代碼
+        });
+      });
+      return busGoData;
+    };
+    const getBackStop = (stopRouteData) => {
+      // 選取站數最多的為路線列表
+      const backStops = stopRouteData.filter(
+        (item) => !item.Direction && item.RouteName.Zh_tw === routeName
+      );
+      let maxStopsNum = 0;
+      let stopIndex = 0;
+      backStops.forEach((item, index) => {
+        if (item.Stops.length > maxStopsNum) {
+          maxStopsNum = item.Stops.length;
+          stopIndex = index;
+        }
+      });
+      // console.log(backStops)
+
+      let stops = backStops[stopIndex].Stops;
+      // console.log(stops)
+      return stops;
+    };
+    const getBackRoute = (busRoute) => {
+      const cachebackData = busRoute.filter(
+        (item) => !item.Direction && item.RouteName.Zh_tw === routeName
+      );
+
+      let busBackData = [];
+
+      cachebackData.forEach((item) => {
+        busBackData.push({
+          estimateTime: item.EstimateTime, //到站時間預估(秒)
+          stopUID: item.StopUID, //站牌唯一識別代碼
+        });
+      });
+      return busBackData;
+    };
     getBus();
     // setReFetch(false);
-  }, [status]);
+  }, [city, routeName, setBackData, setGoData, status]);
 
   useEffect(() => {
     console.log("execute function in useEffect");
@@ -225,7 +243,8 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
           setCurrentRender("Insearch");
         }}
       >
-        返回搜尋
+        <FaLessThan className="me-1"/>
+         返回搜尋
       </button>
       <h1>{routeName}</h1>
       <SearchNav
@@ -241,7 +260,10 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
             <li
               className="d-flex display-row"
               key={data.stopUID}
-              onClick={() => setActivePopup(data)}
+              onClick={() => {
+                setActivePopup(data);
+                handleFlyto(data.positionLat, data.positionLon);
+              }}
             >
               <p
                 className={
@@ -263,7 +285,10 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
             <li
               className="d-flex display-row"
               key={data.stopUID}
-              onClick={() => setActivePopup(data)}
+              onClick={() => {
+                setActivePopup(data);
+                handleFlyto(data.positionLat, data.positionLon);
+              }}
             >
               <p
                 className={
@@ -280,7 +305,6 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
             </li>
           ))}
       </StyledUl>
-      <CountDownTimer />
       <Update fetchData={fetchData} />
 
       {/* <div className="dialogue d-flex flex-column align-items-center">
@@ -329,24 +353,38 @@ let interval = undefined;
 const Update = ({ fetchData }) => {
   const progressRef = useRef();
 
+  //進度條
   const [running, setRunning] = useState(false);
   const [progress, setProgress] = useState(0);
 
+  //倒數計時
+  const time = 30;
+  const [remainSecond, setRemainSecond] = useState(0);
+  const [countDownSecond, setCountDownSecond] = useState(time);
+
   useEffect(() => {
     setRunning(true);
+    const startTime = Date.now();
+
     if (running) {
       interval = setInterval(() => {
+        // 進度條量條
         setProgress((prev) => prev + 1);
+        // 計算剩餘秒數
+        const pastSeconds = parseInt((Date.now() - startTime) / 1000);
+        const remain = countDownSecond - pastSeconds;
+        setRemainSecond(remain < 0 ? 0 : remain);
       }, 300);
     } else {
       clearInterval(interval);
     }
-  }, [running]);
+  }, [countDownSecond, running]);
 
   useEffect(() => {
     if (progress === 100) {
       setRunning(false);
       setProgress(0);
+      setCountDownSecond(time);
       clearInterval(interval);
     }
   }, [progress]);
@@ -363,54 +401,23 @@ const Update = ({ fetchData }) => {
         <div className="progress-bar"></div>
       </div> */}
       <ProgressBar progress={progress} />
-
-      <button
-        className="btn"
-        type="button"
-        value="立即更新"
-        onClick={() => {
-          setRunning(false);
-          setProgress(0);
-          fetchData();
-        }}
-      >
-        立即更新
-      </button>
-    </>
-  );
-};
-
-const CountDownTimer = () => {
-  const time = 30;
-  const [remainSecond, setRemainSecond] = useState(0);
-
-  // effect
-  useEffect(() => {
-    const countDownSecond = time;
-
-    // 產生 Timer
-    console.log(`[timer] == start count down ${countDownSecond}s  ==`);
-    const startTime = Date.now();
-    const countDownTimer = setInterval(() => {
-      // 計算剩餘秒數
-      const pastSeconds = parseInt((Date.now() - startTime) / 1000);
-      const remain = countDownSecond - pastSeconds;
-      setRemainSecond(remain < 0 ? 0 : remain);
-      console.log("[timer] count down: ", remain);
-
-      // 檢查是否結束
-      if (remain <= 0) {
-        clearInterval(countDownTimer);
-        console.log(`[timer] == stop count down ${countDownSecond}s  ==`);
-      }
-    }, 1000);
-  }, []); // 相依 prop / state 值的 Effect
-  return (
-    <div className='tp-count-down-timer'>
-      <div className='tp-count-down-timer__time'>
-        {new Date(remainSecond * 1000).toISOString().substr(11, 8)}
+      <div className="d-flex justify-content-between text-align-center">
+        <p className="">{remainSecond}秒後更新</p>
+        <button
+          className="btn"
+          type="button"
+          value="立即更新"
+          onClick={() => {
+            setRunning(false);
+            setProgress(0);
+            setCountDownSecond(time);
+            fetchData();
+          }}
+        >
+          立即更新
+        </button>
       </div>
-    </div>
+    </>
   );
 };
 

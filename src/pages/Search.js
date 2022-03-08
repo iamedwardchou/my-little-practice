@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useState, useEffect, useRef ,useCallback, useContext } from "react";
 import { Link } from "react-router-dom";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import Insearch from "../components/Search/Insearch.js";
@@ -25,7 +25,9 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [goData, setGoData] = useState([]);
   const [backData, setBackData] = useState([]);
+
   // 點選站牌列表觸發到站資訊
+  const mapRef = useRef();
   const [activePopup, setActivePopup] = useState(null);
 
   const [busData, setBusData] = useState(() => {
@@ -78,7 +80,7 @@ const Search = () => {
 
   return (
     <DataContext.Provider value={{ goData, setGoData, backData, setBackData }}>
-      <PopupContext.Provider value={{ activePopup, setActivePopup }}>
+      <PopupContext.Provider value={{ mapRef, activePopup, setActivePopup }}>
         <div className="breadcrumb">
           {breadcrumbs.map(({ match, breadcrumb }) => (
             <span key={match.pathname}>

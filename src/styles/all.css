@@ -12129,6 +12129,23 @@ input:focus {
   max-width: 162px;
 }
 
+.banner-img {
+  position: relative;
+}
+
+.banner-block {
+  position: absolute;
+  top: 25%;
+  left: 10%;
+}
+
+.banner-title {
+  color: white;
+  -webkit-writing-mode: vertical-lr;
+      -ms-writing-mode: tb-lr;
+          writing-mode: vertical-lr;
+}
+
 .nav-link {
   font-size: 15px;
 }
