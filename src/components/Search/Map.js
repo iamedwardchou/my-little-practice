@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { DataContext } from "../../pages/Search";
 import { PopupContext } from "../../pages/Search";
+import busIcon from "../../images/carbon_bus.svg";
+import styled from "styled-components";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { Icon } from "leaflet";
@@ -10,7 +12,8 @@ import {
   Marker,
   Popup,
   LayersControl,
-  useMapEvent,
+  useMap,
+  useMapEvents,
 } from "react-leaflet";
 import marker from "../../images/公車站點 - 到站.svg";
 // Import the JS and CSS:
@@ -26,20 +29,10 @@ const maps = {
 // 就這樣子吧 難在思考傳遞資料到OSM 套件是否有我想得如此簡單
 const Map = () => {
   const { goData, setGoData, backData, setBackData } = useContext(DataContext);
-  const {mapRef, activePopup } = useContext(PopupContext);
-
-  const [map, setMap] = useState(null);
+  const { map, setMap, activePopup, arrivedState } = useContext(PopupContext);
 
   // State vars for our routing machine instance:
   const [routingMachine, setRoutingMachine] = useState(null);
-
-  // Start-End points for the routing machine:
-  // const [start, setStart] = useState([])
-  // useState([goData[0].positionLon, goData[0].positionLat])
-  // useState([38.9072, -77.0369]);
-  // const [end, setEnd] = useState([])
-  // useState([goData[-1].positionLon, goData[-1].positionLat])
-  // useState([37.7749, -122.4194]);
 
   // 建立兩個圖層, 依照去回路線切換
   // const [currentBus, setCurrentBus] = useState({
@@ -50,21 +43,6 @@ const Map = () => {
   // Ref for our routing machine instace:
 
   const RoutingMachineRef = useRef(null);
-
-  // const mapRef = useRef();
-  // function handleSetView() {
-  //   const { current = {} } = mapRef;
-  //   const { leatletElement: map } = current;
-  //   map.setView([], 14);
-  // }
-
-  // function handleFlyto() {
-  //   const { current = {} } = mapRef;
-  //   const { leatletElement: map } = current;
-  //   map.flyto([], 14, {
-  //     duration: 2,
-  //   });
-  // }
 
   useEffect(() => {
     // Check For the map instance:
@@ -92,7 +70,8 @@ const Map = () => {
             },
           ],
         },
-        waypoints: [start, end],
+        waypoints: waypoint,
+        // [start, end],
         waypointMode: "connect",
         createMarker: () => null,
         // 等實作點擊站牌會顯示該站牌時間資訊, marker 也會同時出現
@@ -121,13 +100,15 @@ const Map = () => {
     <MapContainer
       center={position}
       zoom={12}
-      whenCreated={map => {setMap(map); mapRef.current=map }}
+      whenCreated={(map) => {
+        setMap(map);
+      }}
     >
-      {/* <MyComponent position={position}/> */}
       <TileLayer
         url={maps.base}
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
+      <LocationMarker />
       {backData &&
         backData.map((data) => (
           <Marker
@@ -151,43 +132,53 @@ const Map = () => {
           </Popup> */}
           </Marker>
         ))}
-      {activePopup && (
-        <Popup position={[activePopup.positionLat, activePopup.positionLon]}>
-          <>
-            <div className="stop-name">{activePopup.stopName}</div>
-            <div className="stop-time">{activePopup.time}</div>
-          </>
-        </Popup>
-      )}
+      {/* 可能需要比照進度條作法，改成 js 檔案以便傳入參數判斷渲染的景顏色
+        判斷 className 的作法 比較難實現，因為修改固定樣式比較困難*/}
+      {
+        activePopup && (
+          <MapPopup activePopup={activePopup} arrivedState={arrivedState} />
+        )
+        // <MapPopup activePopup={activePopup}/>
+      }
     </MapContainer>
-    // <MapContainer
-    //   center={[37.0902, -95.7129]}
-    //   zoom={13}
-    //   // Set the map instance to state when ready:
-    //   whenCreated={(map) => setMap(map)}
-    // >
-    //   <TileLayer
-    //     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    //     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    //   />
-    //   <Marker position={position} icon={busMarker}>
-    //     <Popup>
-    //       A pretty CSS3 popup. <br /> Easily customizable.
-    //     </Popup>
-    //   </Marker>
-    // </MapContainer>
   );
 };
 
-// const MyComponent = ({position}) => {
-//   const map = useMapEvent('click', () => {
-//     map.setCenter(position)
-//   })
-//   return (
-//     <>
-//     </>
-//   )
-// }
+// styles ui 實現三種 popup樣式
+
+const MapPopup = ({ activePopup, arrivedState }) => {
+
+  return (
+    <Popup
+      className={arrivedState}
+      position={[activePopup.positionLat, activePopup.positionLon]}
+    >
+      <img src={busIcon} className="stop-icon" alt="" />
+      <div className="stop-name">{activePopup.stopName}</div>
+      <div className="stop-time">{activePopup.time}</div>
+    </Popup>
+  );
+};
+
+function LocationMarker() {
+  const [position, setPosition] = useState(null);
+  const map = useMapEvents({
+    click() {
+      console.log(map);
+      map.locate();
+    },
+    locationfound(e) {
+      setPosition(e.latlng);
+      map.flyTo(e.latlng, map.getZoom());
+    },
+  });
+
+  return position === null ? null : (
+    <Marker position={position}>
+      <Popup>You are here</Popup>
+    </Marker>
+  );
+}
 // setCenter to focusing location
 
 export default Map;

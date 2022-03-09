@@ -10,26 +10,8 @@ import {CityContext} from '../Search/CityContext'
 
 
 const Locations = () => {
-    // let cityList =["台北市 / 新北市", "桃園市", "台中市", "台南市", "高雄市", "其他地區"];
-    // let citiesListEng =["Taipei / New Taipei", "Taoyuan", "Taichung", "Tainan", "Kaohsiung", "Other City"];
-    /*
-    <li className="col location p-4 ">
-        <img src={busTaipei} alt="" />
-        <p>台北市 / 新北市</p>
-        <p>Taipei / New Taipei</p>     
-    </li>
-    */ 
-   /*
-    let locationList = document.querySelector('.location-list');
-    locationList.addEventListener('click', (e)=>{
-        console.log(e.target.value);
-    })
-   */
-
     //從app.js 取得 fetch 的city 資料 
-    
     const {setCity} = useContext(CityContext)
-    // *** 問題在於要如何在useContext 下 setCity
 
     function handleClick(e){
         e.preventDefault();
@@ -96,5 +78,4 @@ const Locations = () => {
         </section>
     )
 }
-
 export default Locations

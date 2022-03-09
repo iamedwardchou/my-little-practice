@@ -5,13 +5,12 @@ import React, {
   useRef,
   useCallback,
 } from "react";
-import busIcon from "../../images/carbon_bus.svg";
 import ProgressBar from "./ProgressBar";
 import { apiBusRoute, apiBusRouteStop } from "../../Api";
 import { Button } from "react-bootstrap";
 import { DataContext } from "../../pages/Search";
 import { PopupContext } from "../../pages/Search";
-import {FaLessThan} from "react-icons/fa"
+import { FaLessThan } from "react-icons/fa";
 import styled from "styled-components";
 
 const StyledUl = styled.ul`
@@ -32,26 +31,25 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
   const { routeName, depName, desName } = routeData;
 
   const { goData, setGoData, backData, setBackData } = useContext(DataContext);
-  const { setActivePopup } = useContext(PopupContext);
-  // const {setGoData} = useContext(DataContext)
-  // const {backData} = useContext(DataContext)
-  // const {setBackData} = useContext(DataContext)
+  const { setActivePopup, setArrivedState } = useContext(PopupContext);
 
   // 地圖相關顯示
-  const {mapRef } = useContext(PopupContext);
+  const { map } = useContext(PopupContext);
 
-  function handleSetView(lat, lon) {
-    const { current = {} } = mapRef;
-    const { leatletElement: map } = current;
-    map.setView([lat, lon], 14);
-  }
+  // function handleSetView(lat, lon) {
+  //   const { current = {} } = map;
+  //   const { leatletElement: map } = current;
+  //   map.setView([lat, lon], 14);
+  // }
 
   function handleFlyto(lat, lon) {
-    const { current = {} } = mapRef;
-    const { leatletElement: map } = current;
-    map.flyto([lat, lon], 14, {
-      duration: 2,
-    });
+    if (map) {
+      map.flyTo([lat, lon], 16, {
+        duration: 2,
+      });
+    }
+    // const { current = {} } = map;
+    // const { leatletElement: map } = current;
   }
 
   const handleRefetch = () => {
@@ -243,8 +241,8 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
           setCurrentRender("Insearch");
         }}
       >
-        <FaLessThan className="me-1"/>
-         返回搜尋
+        <FaLessThan className="me-1" />
+        返回搜尋
       </button>
       <h1>{routeName}</h1>
       <SearchNav
@@ -261,6 +259,11 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
               className="d-flex display-row"
               key={data.stopUID}
               onClick={() => {
+                data.time === "進站中"
+                  ? setArrivedState("popup-arrived")
+                  : data.time === "即將到站"
+                  ? setArrivedState("popup-arriving")
+                  : setArrivedState("popup-other");
                 setActivePopup(data);
                 handleFlyto(data.positionLat, data.positionLon);
               }}
@@ -286,6 +289,11 @@ const ShowRoute = ({ city, routeData, setCurrentRender }) => {
               className="d-flex display-row"
               key={data.stopUID}
               onClick={() => {
+                data.time === "進站中"
+                ? setArrivedState("popup-arrived")
+                : data.time === "即將到站"
+                ? setArrivedState("popup-arriving")
+                : setArrivedState("popup-other");
                 setActivePopup(data);
                 handleFlyto(data.positionLat, data.positionLon);
               }}
@@ -351,8 +359,6 @@ const SearchNav = ({ depName, desName, setStatus, fetchData }) => {
 let interval = undefined;
 
 const Update = ({ fetchData }) => {
-  const progressRef = useRef();
-
   //進度條
   const [running, setRunning] = useState(false);
   const [progress, setProgress] = useState(0);
